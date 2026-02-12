@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\ProductController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -19,5 +20,20 @@ Route::prefix('/category')
         Route::get('/', 'showCategory')->name('show');
         Route::post('/store', 'storeCategory')->name('store');
     });
+Route::prefix('/product')
+    ->name('product.')
+    ->controller(ProductController::class)
+    ->group(function(){
+        Route::get('/', 'addProduct')->name('add');
+        
+    });
+Route::prefix('/product')
+    ->name('product.')
+    ->controller(ProductController::class)
+    ->group(function(){
+        Route::get('/product', 'productList')->name('list');
+        
+    });
+
 
 

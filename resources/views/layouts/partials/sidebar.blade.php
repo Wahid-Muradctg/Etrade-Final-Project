@@ -10,44 +10,30 @@
              <!-- Category -->
             <li class="menu-item {{ isActiveRoute('admin.category.show') }}">
               <a href="{{ route('admin.category.show') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <i class="menu-icon tf-icons bx bx-qr"></i>
                 <div data-i18n="Analytics">Category</div>
               </a>
             </li>
 
-            <!-- Layouts -->
-            <li class="menu-item">
+            <!-- products -->
+            <li class="menu-item {{ isActiveRoute('admin.product.*') }}  ">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="Layouts">Layouts</div>
+                <i class="menu-icon tf-icons bx bx-package"></i>
+                <div data-i18n="Layouts">Product</div>
               </a>
 
               <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="layouts-without-menu.html" class="menu-link">
-                    <div data-i18n="Without menu">Without menu</div>
+                <li class="menu-item {{ isActiveRoute('admin.product.add') }} ">
+                  <a href="{{ route('admin.product.add') }}" class="menu-link">
+                    <div data-i18n="Without menu">Add Product</div>
                   </a>
                 </li>
-                <li class="menu-item">
-                  <a href="layouts-without-navbar.html" class="menu-link">
-                    <div data-i18n="Without navbar">Without navbar</div>
+                <li class="menu-item {{ isActiveRoute('admin.product.list') }}">
+                  <a href="{{ route('admin.product.list') }}" class="menu-link">
+                    <div data-i18n="Without navbar">Product List</div>
                   </a>
                 </li>
-                <li class="menu-item">
-                  <a href="layouts-container.html" class="menu-link">
-                    <div data-i18n="Container">Container</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="layouts-fluid.html" class="menu-link">
-                    <div data-i18n="Fluid">Fluid</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="layouts-blank.html" class="menu-link">
-                    <div data-i18n="Blank">Blank</div>
-                  </a>
-                </li>
+               
               </ul>
             </li>
 
