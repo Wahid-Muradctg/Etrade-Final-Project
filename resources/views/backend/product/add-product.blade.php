@@ -12,7 +12,7 @@
                     <h4 class="card-header">Name and Description</h4>
                     <hr class="p-0 m-0">
                     <div class="card-body">
-                        <div>
+                        <div class="mb-4">
                             <label for="productName" class="form-label">Prodact Name/Title</label>
                             <input type="text" class="form-control" id="productName" name="title"
                                 aria-describedby="defaultFormControlHelp" />
@@ -20,7 +20,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div>
+                        <div class="mb-4">
                             <label for="productShortDescription" class="form-label">Prodact Short Description</label>
                             <input type="text" class="form-control" id="productShortDescription" name="shortdes"
                                 aria-describedby="defaultFormControlHelp" />
@@ -64,7 +64,7 @@
                     <h4 class="card-header">Inventory</h4>
                     <hr class="p-0 m-0">
                     <div class="card-body">
-                        <div>
+                        <div class="mb-4">
                             <label for="sku" class="form-label">Stock Kepping Unit</label>
                             <input type="text" class="form-control" id="sku" name="sku"
                                 aria-describedby="defaultFormControlHelp" />
@@ -129,7 +129,7 @@
                     <h4 class="card-header">Product Pricing</h4>
                     <hr class="p-0 m-0">
                     <div class="card-body">
-                        <div class="row">
+                        <div class="row mb-4">
                             <div class="col-lg-6 col-12">
                                 <label for="regularPrice" class="form-label">Regular Price</label>
                                 <input class="form-control" name="regularprice" type="number" id="regularPrice" />
@@ -199,8 +199,8 @@
                     </div>
                 </div>
                 <div class="row justify-content-evenly pt-5">
-                    <button class="btn btn-primary col-5 p-2"><i class="bx bx-save me-2"></i>Save product</button>
-                    <button class="btn col-5 btn-dark p-2 "> <i class="bx bx-plus me-2"></i>Add Product</button>
+                    <a href="" class="btn btn-primary col-5 p-2"><i class="bx bx-save me-2"></i>Save product</a>
+                    <a href="" class="btn col-5 btn-dark p-2 "> <i class="bx bx-plus me-2"></i>Add Product</a>
                 </div>
             </div>
         </div>
