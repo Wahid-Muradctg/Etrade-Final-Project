@@ -24,14 +24,14 @@ Route::prefix('/product')
     ->name('product.')
     ->controller(ProductController::class)
     ->group(function(){
-        Route::get('/', 'addProduct')->name('add');
+        Route::get('/addproduct', 'addProduct')->name('add');
         
     });
 Route::prefix('/product')
     ->name('product.')
     ->controller(ProductController::class)
     ->group(function(){
-        Route::get('/product', 'productList')->name('list');
+        Route::get('/productlist', 'productList')->name('list');
         
     });
 
