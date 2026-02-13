@@ -17,9 +17,14 @@ Route::prefix('/category')
     ->name('category.')
     ->controller(CategoryController::class)
     ->group(function(){
-        Route::get('/', 'showCategory')->name('show');
+        Route::get('/{id?}', 'showCategory')->name('show');
         Route::post('/store', 'storeCategory')->name('store');
+        Route::get('/delete/{id}', 'deleteCategory')->name('delete');
+        Route::post('/update/{id}', 'updateCategory')->name('update');
+
     });
+
+
 Route::prefix('/product')
     ->name('product.')
     ->controller(ProductController::class)
@@ -27,11 +32,14 @@ Route::prefix('/product')
         Route::get('/addproduct', 'addProduct')->name('add');
         
     });
+
+
 Route::prefix('/product')
     ->name('product.')
     ->controller(ProductController::class)
     ->group(function(){
         Route::get('/productlist', 'productList')->name('list');
+        
         
     });
 

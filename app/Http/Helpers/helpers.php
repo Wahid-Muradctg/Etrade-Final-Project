@@ -6,3 +6,10 @@ function isActiveRoute($uri, $activeClass = 'active'){
     }
     return request()->routeIs($uri) ? $activeClass : '';
 }
+
+
+function getImage($src = null){
+    if(!$src) return asset('placeholder.png');
+
+    return asset('storage/'. $src);
+}

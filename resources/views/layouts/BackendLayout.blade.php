@@ -245,7 +245,7 @@
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-       <script src="{{ asset('backend/assets/vendor/libs/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('backend/assets/vendor/libs/jquery/jquery.js') }}"></script>
     <script src="{{ asset('backend/assets/vendor/libs/popper/popper.js') }}"></script>
     <script src="{{ asset('backend/assets/vendor/js/bootstrap.js') }}"></script>
     <script src="{{ asset('backend/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
@@ -261,5 +261,31 @@
     <!-- Vendors JS -->
     <script src="{{ asset('backend/assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
     <script src="{{ asset('backend/assets/js/dashboards-analytics.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+    </script>
+    
+    @if (session()->has('msg'))
+    <script>
+      Toast.fire({
+        icon: `{{ session('msg')['type'] ?? 'success' }}`,
+        title: `{{ session('msg')['content'] ?? 'Success' }}`
+      });
+    </script>
+    @endif
+
+
+    @stack('js')
   </body>
 </html>

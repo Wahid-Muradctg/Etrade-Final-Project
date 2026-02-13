@@ -21,6 +21,14 @@
                             @enderror
                         </div>
                         <div class="mb-4">
+                            <label for="productSlug" class="form-label">Product Slug</label>
+                            <input type="text" class="form-control" id="productSlug" name="slug"
+                                aria-describedby="defaultFormControlHelp" />
+                                @error('slug')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                        </div>
+                        <div class="mb-4">
                             <label for="productShortDescription" class="form-label">Prodact Short Description</label>
                             <input type="text" class="form-control" id="productShortDescription" name="shortdes"
                                 aria-describedby="defaultFormControlHelp" />
@@ -45,19 +53,16 @@
                             <label for="catagorySelect" class="form-label">Product Catagory</label>
                             <select class="form-select" name="catagory" id="catagorySelect"
                                 aria-label="Default select example">
-
-                                <option selected>Headphone</option>
+                                @forelse ($categories as $category)
+                                <option selected disabled>Please select a Cagtegory</option>
+                                   <option value="{{ $category->id }}">{{ $category->title }}</option>
+                               @empty
+                                   <option selected disabled>Please add Cagtegory</option>
+                               @endforelse
                             </select>
                             
                         </div>
-                        <div>
-                            <label for="productSlug" class="form-label">Product Slug</label>
-                            <input type="text" class="form-control" id="productSlug" name="slug"
-                                aria-describedby="defaultFormControlHelp" />
-                                @error('slug')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                        </div>
+                        
                     </div>
                 </div>
                 <div class="card border border-light border-2 rounded-3 mb-4">
@@ -145,15 +150,6 @@
                                     @enderror
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-6 col-12">
-                                <label for="discount" class="form-label">Discount</label>
-                                <input class="form-control" name="discount" type="number" id="discount" />
-                            @error('discount')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="card border border-light border-2 rounded-3 mb-4">
@@ -162,16 +158,22 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-6">
-                                <img src="" alt="">
+                                <img  id="preview" src="" alt="" class="img-fluid">
                             </div>
-                            
                         </div>
                         <div>
-                            <label for="formFileLg" class="form-label">Choose Image</label>
-                            <input class="form-control form-control-lg" name="productimg" id="formFileLg" type="file" />
+                            <label for="productimg" class="form-label">Choose Image</label>
+                            <input class="form-control form-control-lg" name="productimg" id="productimg" type="file" />
                         @error('productimg')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
+                        </div>
+                        <div>
+                            <label for="gallImges" class="form-label">Gallery Images</label>
+                            <input class="form-control form-control-lg" name="gallImg" id="gallImges" type="file" multiple />
+                        @error('gallImg')
+                                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
                         </div>
                     </div>
                 </div>
@@ -206,3 +208,20 @@
         </div>
     </form>
 @endsection
+
+@push('js')
+    <script>
+        $(function(){
+            $('input[name="title"]').keyup(function(){
+                const slug = $(this).val().toLowerCase().replaceAll(' ', '-').replaceAll('@', '').replaceAll('#', '')
+                $('input[name="slug"]').val(slug)
+            })
+
+            $('#productimg').change(function(){
+                const file = $(this)[0].files[0]
+                const url = URL.createObjectURL(file)
+                $('#preview').attr('src', url)
+            })
+        })
+    </script>
+@endpush

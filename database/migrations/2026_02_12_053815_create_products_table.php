@@ -14,22 +14,22 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('shortdescription');
-            $table->text('description');           
-            $table->string('catagory');
             $table->string('slug')->unique();
-            $table->string('brandname');
-            $table->string('model')->unique();
-            $table->string('sku')->unique();
-            $table->integer('stock');
-            $table->integer('minstock');
-            $table->boolean('stockstatus')->default(true);
-            $table->integer('regularprice');
-            $table->integer('saleprice')->nullable();
-            $table->string('discount')->nullable();
+            $table->text('short_description')->nullable();
+            $table->longText('description')->nullable();           
+            $table->unsignedBigInteger('catagory_id');
+            $table->string('brand_name')->nullable();
+            $table->string('model')->nullable()->unique();
+            $table->string('sku')->nullable()->unique();
+            $table->integer('stock')->default(0);
+            $table->integer('minstock')->default(0);
+            $table->boolean('stock_status')->default(true);
+            $table->integer('price');
+            $table->integer('sale_price')->nullable();
             $table->string('image')->nullable();
-            $table->string('publishedstatus');
-            $table->date('publisheddate');            
+            $table->json('gall_img')->nullable();
+            $table->string('published_status')->nullable();
+            $table->date('published_date')->nullable();            
             $table->timestamps();
         });
     }

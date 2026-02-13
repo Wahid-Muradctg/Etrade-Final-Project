@@ -15285,6 +15285,10 @@ html:not(.layout-menu-fixed) .menu-inner-shadow {
 }
 .layout-navbar .navbar-nav-right {
   flex-basis: 100%;
+  z-index:1;
+}
+ .swal2-container{
+  z-index: 999999 !important;
 }
 .layout-navbar .navbar-search-wrapper .search-input,
 .layout-navbar .navbar-search-wrapper .input-group-text {
