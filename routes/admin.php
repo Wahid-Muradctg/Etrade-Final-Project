@@ -41,7 +41,7 @@ Route::prefix('/product')
     ->group(function(){
         Route::get('/productlist', 'productList')->name('list');
         Route::get('/deleteproduct/{id}','deleteProduct')->name('deleteproduct');
-        
+        Route::post('/updateproduct/{id}','updateProduct')->name('updateproduct');
     });
 
 
