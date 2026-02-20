@@ -24,22 +24,23 @@ Route::prefix('/category')
 
     });
 
-
+// add product routes
 Route::prefix('/product')
     ->name('product.')
     ->controller(ProductController::class)
     ->group(function(){
-        Route::get('/addproduct', 'addProduct')->name('add');
+        Route::get('/addproduct/{id}', 'addProduct')->name('add');
+        Route::post('/storeproduct','storeProduct')->name('storproduct');
         
     });
 
-
+// product list routes
 Route::prefix('/product')
     ->name('product.')
     ->controller(ProductController::class)
     ->group(function(){
         Route::get('/productlist', 'productList')->name('list');
-        
+        Route::get('/deleteproduct/{id}','deleteProduct')->name('deleteproduct');
         
     });
 
