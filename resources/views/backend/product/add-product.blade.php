@@ -1,10 +1,10 @@
 @extends('layouts.BackendLayout')
 @section('backend_cnt')
     <div class="heading pb-4">
-        <h2>Add New Product</h2>
-        <p>Add a new product to your store</p>
+        <h2>{{ isset($editProduct)?'Edit Product' : 'Add New Product' }}</h2>
+        <p>{{ isset($editProduct)?'Edit product and store' : 'Add a new product to your store' }} </p>
     </div>
-    <form action="" enctype="multipart/form-data" method="POST">
+    <form action="{{ isset($editProduct)?route('admin.product.updateproduct', $editProduct->id) : route('admin.product.storproduct') }}" enctype="multipart/form-data" method="POST">
         @csrf
         <div class="row">
             <div class="col-lg-6 col-12">
@@ -13,8 +13,9 @@
                     <hr class="p-0 m-0">
                     <div class="card-body">
                         <div class="mb-4">
-                            <label  for="productName" class="form-label">Prodact Name/Title</label>
-                            <input value="{{ $products->where('id', request()->id)->first()->title ?? '' }}" type="text" class="form-control" id="productName" name="title"
+                            <label for="productName" class="form-label">Prodact Name/Title</label>
+                            <input value="{{ $products->where('id', request()->id)->first()->title ?? '' }}" type="text"
+                                class="form-control" id="productName" name="title"
                                 aria-describedby="defaultFormControlHelp" />
                             @error('title')
                                 <span class="text-danger">{{ $message }}</span>
@@ -22,26 +23,29 @@
                         </div>
                         <div class="mb-4">
                             <label for="productSlug" class="form-label">Product Slug</label>
-                            <input value="{{ $products->where('id', request()->id)->first()->slug ?? '' }}"  type="text" class="form-control" id="productSlug" name="slug"
+                            <input value="{{ $products->where('id', request()->id)->first()->slug ?? '' }}" type="text"
+                                class="form-control" id="productSlug" name="slug"
                                 aria-describedby="defaultFormControlHelp" />
-                                @error('slug')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                            @error('slug')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="mb-4">
                             <label for="productShortDescription" class="form-label">Prodact Short Description</label>
-                            <input value="{{ $products->where('id', request()->id)->first()->short_description ?? '' }}" type="text" class="form-control" id="productShortDescription" name="shortdes"
+                            <input value="{{ $products->where('id', request()->id)->first()->short_description ?? '' }}"
+                                type="text" class="form-control" id="productShortDescription" name="short_description"
                                 aria-describedby="defaultFormControlHelp" />
-                                @error('shortdes')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                            @error('short_description')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div>
                             <label for="productDescription" class="form-label">Product Description</label>
-                            <textarea value="{{ $products->where('id', request()->id)->first()->description ?? '' }}"  class="form-control" id="productDescription" rows="5" name="description"></textarea>
+                            <textarea value="{{ $products->where('id', request()->id)->first()->description ?? '' }}" class="form-control"
+                                id="productDescription" rows="5" name="description"></textarea>
                             @error('description')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                 </div>
@@ -51,18 +55,18 @@
                     <div class="card-body">
                         <div class="mb-4">
                             <label for="catagorySelect" class="form-label">Product Catagory</label>
-                            <select class="form-select" name="catagory" id="catagorySelect"
+                            <select class="form-select" name="catagory_id" id="catagorySelect"
                                 aria-label="Default select example">
                                 @forelse ($categories as $category)
-                                <option selected disabled>Please select a Cagtegory</option>
-                                   <option value="{{ $category->id }}">{{ $category->title }}</option>
-                               @empty
-                                   <option selected disabled>Please add Cagtegory</option>
-                               @endforelse
+                                    <option selected disabled>Please select a Cagtegory</option>
+                                    <option value="{{ $category->id }}">{{ $category->title }}</option>
+                                @empty
+                                    <option selected disabled>Please add Cagtegory</option>
+                                @endforelse
                             </select>
-                            
+
                         </div>
-                        
+
                     </div>
                 </div>
                 <div class="card border border-light border-2 rounded-3 mb-4">
@@ -71,28 +75,31 @@
                     <div class="card-body">
                         <div class="mb-4">
                             <label for="sku" class="form-label">Stock Kepping Unit</label>
-                            <input value="{{ $products->where('id', request()->id)->first()->sku ?? '' }}" type="text" class="form-control" id="sku" name="sku"
+                            <input value="{{ $products->where('id', request()->id)->first()->sku ?? '' }}" type="text"
+                                class="form-control" id="sku" name="sku"
                                 aria-describedby="defaultFormControlHelp" />
-                                @error('sku')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                            @error('sku')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="row">
                             <div class="col-lg-4 col-12">
                                 <label for="productStock" class="form-label">Product Stock</label>
-                                <input value="{{ $products->where('id', request()->id)->first()->stock ?? '' }}" type="number" class="form-control" id="productStock" name="productstock"
+                                <input value="{{ $products->where('id', request()->id)->first()->stock ?? '' }}"
+                                    type="number" class="form-control" id="productStock" name="stock"
                                     aria-describedby="defaultFormControlHelp" />
-                                    @error('productstock')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                @error('stock')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="col-lg-4 col-12">
                                 <label for="productMiniumstock" class="form-label">Minium Stock</label>
-                                <input value="{{ $products->where('id', request()->id)->first()->minstock ?? '' }}" type="number" class="form-control" id="productMiniumstock" name="pmstock"
+                                <input value="{{ $products->where('id', request()->id)->first()->minstock ?? '' }}"
+                                    type="number" class="form-control" id="productMiniumstock" name="minstock"
                                     aria-describedby="defaultFormControlHelp" />
-                                    @error('pmstock')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                @error('minstock')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="mb-4 col-lg-4 col-12">
                                 <label for="catagoryStatus" class="form-label">Product Status</label>
@@ -113,19 +120,21 @@
                         <div class="row">
                             <div class="col-lg-6 col-12">
                                 <label for="brand" class="form-label">Brand Name</label>
-                                <input value="{{ $products->where('id', request()->id)->first()->brand_name ?? '' }}" type="text" class="form-control" id="brand" name="bname"
+                                <input value="{{ $products->where('id', request()->id)->first()->brand_name ?? '' }}"
+                                    type="text" class="form-control" id="brand" name="bname"
                                     aria-describedby="defaultFormControlHelp" />
-                                    @error('bname')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                @error('bname')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="col-lg-6 col-12">
                                 <label for="Model" class="form-label">Model</label>
-                                <input value="{{ $products->where('id', request()->id)->first()->model ?? '' }}" type="text" class="form-control" id="Model" name="model"
+                                <input value="{{ $products->where('id', request()->id)->first()->model ?? '' }}"
+                                    type="text" class="form-control" id="Model" name="model"
                                     aria-describedby="defaultFormControlHelp" />
-                                    @error('model')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                @error('model')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -137,17 +146,19 @@
                         <div class="row mb-4">
                             <div class="col-lg-6 col-12">
                                 <label for="regularPrice" class="form-label">Regular Price</label>
-                                <input value="{{ $products->where('id', request()->id)->first()->price ?? '' }}" class="form-control" name="regularprice" type="number" id="regularPrice" />
-                            @error('regularprice')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                <input value="{{ $products->where('id', request()->id)->first()->price ?? '' }}"
+                                    class="form-control" name="regularprice" type="number" id="Price" />
+                                @error('price')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="col-lg-6 col-12">
                                 <label for="salePrice" class="form-label">Sale Price</label>
-                                <input value="{{ $products->where('id', request()->id)->first()->sale_price ?? '' }}" class="form-control" name="saleprice" type="number" id="salePrice" />
-                           @error('saleprice')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                <input value="{{ $products->where('id', request()->id)->first()->sale_price ?? '' }}"
+                                    class="form-control" name="sale_price" type="number" id="salePrice" />
+                                @error('sale_price')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -158,22 +169,23 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-6">
-                                <img  id="preview" src="" alt="" class="img-fluid">
+                                <img id="preview" src="" alt="" class="img-fluid">
                             </div>
                         </div>
                         <div>
                             <label for="productimg" class="form-label">Choose Image</label>
-                            <input class="form-control form-control-lg" name="productimg" id="productimg" type="file" />
-                        @error('productimg')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                            <input class="form-control form-control-lg" name="image" id="productimg" type="file" />
+                            @error('image')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div>
                             <label for="gallImges" class="form-label">Gallery Images</label>
-                            <input class="form-control form-control-lg" name="gallImg" id="gallImges" type="file" multiple />
-                        @error('gallImg')
-                                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
+                            <input class="form-control form-control-lg" name="gall_Img[]" id="gallImges" type="file"
+                                multiple />
+                            @error('gall_Img')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                 </div>
@@ -184,7 +196,8 @@
                         <div class="row">
                             <div class="col-6">
                                 <label for="visibility" class="form-label">Product Visibility</label>
-                                <select class="form-select" id="visibility" name="productpublish" aria-label="Default select example">
+                                <select class="form-select" id="visibility" name="published_status"
+                                    aria-label="Default select example">
                                     <option selected>Published</option>
                                     <option>Schedule</option>
                                     <option>Hidden</option>
@@ -192,17 +205,20 @@
                             </div>
                             <div class="col-6">
                                 <label for="publishDate" class="form-label">Publish Date</label>
-                                <input value="{{ $products->where('id', request()->id)->first()->published_date ?? '' }}" type="date" class="form-control" id="publishDate" name="publishdate">
-                                @error('publishdate')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                <input value="{{ $products->where('id', request()->id)->first()->published_date ?? '' }}"
+                                    type="date" class="form-control" id="publishDate" name="publish_date">
+                                @error('publish_date')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row justify-content-evenly pt-5">
                     {{-- <a href="" class="btn btn-primary col-5 p-2"><i class="bx bx-save me-2"></i>Save product</a> --}}
-                    <a href="" class="btn col-5 btn-dark p-2 "> <i class="bx bx-plus me-2"></i>Add Product</a>
+                    <button type="submit" class="btn btn-dark col-6 p-2">
+                        <i class="bx bx-plus me-2"></i>{{ isset($editProduct)?'Edit Product' : 'Add Product' }} 
+                    </button>
                 </div>
             </div>
         </div>
@@ -211,13 +227,14 @@
 
 @push('js')
     <script>
-        $(function(){
-            $('input[name="title"]').keyup(function(){
-                const slug = $(this).val().toLowerCase().replaceAll(' ', '-').replaceAll('@', '').replaceAll('#', '')
+        $(function() {
+            $('input[name="title"]').keyup(function() {
+                const slug = $(this).val().toLowerCase().replaceAll(' ', '-').replaceAll('@', '')
+                    .replaceAll('#', '')
                 $('input[name="slug"]').val(slug)
             })
 
-            $('#productimg').change(function(){
+            $('#productimg').change(function() {
                 const file = $(this)[0].files[0]
                 const url = URL.createObjectURL(file)
                 $('#preview').attr('src', url)

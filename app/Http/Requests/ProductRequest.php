@@ -35,9 +35,9 @@ class ProductRequest extends FormRequest
 
             'stock' => 'nullable|integer|min:0',
             'minstock' => 'nullable|integer|min:0',
-            'stock_status' => 'required|boolean',
+            'stock_status' => 'required|in:0,1',
 
-            'price' => 'required|integer|min:0',
+            'price' => 'required|numeric|min:0',
             'sale_price' => 'nullable|integer|min:0',
 
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp',

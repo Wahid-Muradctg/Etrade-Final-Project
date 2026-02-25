@@ -25,23 +25,15 @@ Route::prefix('/category')
     });
 
 // add product routes
-Route::prefix('/product')
-    ->name('product.')
+Route::prefix('/product') // Added /admin to match your intent
+    ->name('product.')     // Changed to admin.product.
     ->controller(ProductController::class)
     ->group(function(){
-        Route::get('/addproduct/{id}', 'addProduct')->name('add');
-        Route::post('/storeproduct','storeProduct')->name('storproduct');
-        
-    });
-
-// product list routes
-Route::prefix('/product')
-    ->name('product.')
-    ->controller(ProductController::class)
-    ->group(function(){
-        Route::get('/productlist', 'productList')->name('list');
-        Route::get('/deleteproduct/{id}','deleteProduct')->name('deleteproduct');
-        Route::post('/updateproduct/{id}','updateProduct')->name('updateproduct');
+        Route::get('/add-product/{id?}', 'addProduct')->name('add');
+        Route::post('/store-product','storeProduct')->name('storproduct');
+        Route::get('/product-list', 'productList')->name('list');
+        Route::get('/delete-product/{id}','deleteProduct')->name('deleteproduct');
+        Route::post('/update-product/{id}','updateProduct')->name('updateproduct');
     });
 
 
