@@ -1,10 +1,12 @@
 @extends('layouts.BackendLayout')
 @section('backend_cnt')
     <div class="heading pb-4">
-        <h2>{{ isset($editProduct)?'Edit Product' : 'Add New Product' }}</h2>
-        <p>{{ isset($editProduct)?'Edit product and store' : 'Add a new product to your store' }} </p>
+        <h2>{{ isset($editProduct) ? 'Edit Product' : 'Add New Product' }}</h2>
+        <p>{{ isset($editProduct) ? 'Edit product and store' : 'Add a new product to your store' }} </p>
     </div>
-    <form action="{{ isset($editProduct)?route('admin.product.updateproduct', $editProduct->id) : route('admin.product.storproduct') }}" enctype="multipart/form-data" method="POST">
+    <form
+        action="{{ isset($editProduct) ? route('admin.product.updateproduct', $editProduct->id) : route('admin.product.storproduct') }}"
+        enctype="multipart/form-data" method="POST">
         @csrf
         <div class="row">
             <div class="col-lg-6 col-12">
@@ -179,11 +181,14 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                        <div class="row gallleryImg">
+                           
+                        </div>
                         <div>
                             <label for="gallImges" class="form-label">Gallery Images</label>
                             <input class="form-control form-control-lg" name="gall_Img[]" id="gallImges" type="file"
                                 multiple />
-                            @error('gall_Img')
+                            @error('gall_Img[]')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -217,7 +222,7 @@
                 <div class="row justify-content-evenly pt-5">
                     {{-- <a href="" class="btn btn-primary col-5 p-2"><i class="bx bx-save me-2"></i>Save product</a> --}}
                     <button type="submit" class="btn btn-dark col-6 p-2">
-                        <i class="bx bx-plus me-2"></i>{{ isset($editProduct)?'Edit Product' : 'Add Product' }} 
+                        <i class="bx bx-plus me-2"></i>{{ isset($editProduct) ? 'Edit Product' : 'Add Product' }}
                     </button>
                 </div>
             </div>
@@ -239,6 +244,31 @@
                 const url = URL.createObjectURL(file)
                 $('#preview').attr('src', url)
             })
+
+            $('#gallImges').change(function() {
+
+                let previewContainer = $('.gallleryImg');
+                previewContainer.html(''); 
+
+                const files = this.files;
+
+                if (files.length > 0) {
+                    $.each(files, function(index, file) {
+
+                        if (!file.type.startsWith('image/')) return; 
+
+                        const url = URL.createObjectURL(file);
+
+                        const imgBox = `
+                <div class="col-4 mb-3">
+                    <img src="${url}" class="img-fluid rounded shadow">
+                </div>
+            `;
+
+                        previewContainer.append(imgBox);
+                    });
+                }
+            });
         })
     </script>
 @endpush
