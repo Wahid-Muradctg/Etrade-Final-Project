@@ -182,7 +182,7 @@
                             @enderror
                         </div>
                         <div class="row gallleryImg">
-                           
+
                         </div>
                         <div>
                             <label for="gallImges" class="form-label">Gallery Images</label>
@@ -233,42 +233,33 @@
 @push('js')
     <script>
         $(function() {
-            $('input[name="title"]').keyup(function() {
-                const slug = $(this).val().toLowerCase().replaceAll(' ', '-').replaceAll('@', '')
-                    .replaceAll('#', '')
-                $('input[name="slug"]').val(slug)
-            })
+                    $('input[name="title"]').keyup(function() {
+                        const slug = $(this).val().toLowerCase().replaceAll(' ', '-').replaceAll('@', '')
+                            .replaceAll('#', '')
+                        $('input[name="slug"]').val(slug)
+                    })
 
-            $('#productimg').change(function() {
-                const file = $(this)[0].files[0]
-                const url = URL.createObjectURL(file)
-                $('#preview').attr('src', url)
-            })
+                    $('#productimg').change(function() {
+                        const file = $(this)[0].files[0]
+                        const url = URL.createObjectURL(file)
+                        $('#preview').attr('src', url)
+                    })
 
-            $('#gallImges').change(function() {
+                    $('#gallImges').on('change', function(e) {
+                        const previewContainer = $('.gallleryImg');                       
 
-                let previewContainer = $('.gallleryImg');
-                previewContainer.html(''); 
-
-                const files = this.files;
-
-                if (files.length > 0) {
-                    $.each(files, function(index, file) {
-
-                        if (!file.type.startsWith('image/')) return; 
-
-                        const url = URL.createObjectURL(file);
-
-                        const imgBox = `
-                <div class="col-4 mb-3">
-                    <img src="${url}" class="img-fluid rounded shadow">
-                </div>
-            `;
-
-                        previewContainer.append(imgBox);
+                        Array.from(e.target.files).forEach(file => {
+                            if (file.type.startsWith('image/')) {                                
+                                const url = URL.createObjectURL(file);
+                                const imgBox = `
+                                    <div class="col-4 mb-3">
+                                        <img height="100px" src="${url}" class="img-fluid rounded shadow">
+                                    </div>
+                                `;
+                                previewContainer.append(imgBox);
+                            }
+                        });
                     });
-                }
-            });
-        })
+                })
     </script>
 @endpush
