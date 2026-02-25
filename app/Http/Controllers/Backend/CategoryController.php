@@ -65,7 +65,7 @@ class CategoryController extends Controller
         }
         $oldCategory->delete();
         return to_route('admin.category.show')->with('msg', [
-            'type' => 'error',
+            'type' => 'warning',
             'content' => 'Delete Category!'
         ]);
     }

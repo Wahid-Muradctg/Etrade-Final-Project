@@ -83,7 +83,7 @@ class ProductController extends Controller
 
         $product->delete();
 
-        return redirect()->route('admin.product.list')->with('msg', ['type' => 'success', 'content' => 'Product Deleted!']);
+        return redirect()->route('admin.product.list')->with('msg', ['type' => 'warning', 'content' => 'Product Deleted!']);
     }
 
     public function updateProduct(ProductRequest $request, $id)
