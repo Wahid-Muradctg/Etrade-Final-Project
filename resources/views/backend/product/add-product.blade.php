@@ -184,8 +184,8 @@
                         <div class="row gallleryImg">
 
                         </div>
-                        <div>
-                            <label for="gallImges" class="form-label">Gallery Images</label>
+                        <div class="mt-4">
+                            <label for="gallImges" class="form-label ">Gallery Images</label>
                             <input class="form-control form-control-lg" name="gall_Img[]" id="gallImges" type="file"
                                 multiple />
                             @error('gall_Img[]')
@@ -233,33 +233,37 @@
 @push('js')
     <script>
         $(function() {
-                    $('input[name="title"]').keyup(function() {
-                        const slug = $(this).val().toLowerCase().replaceAll(' ', '-').replaceAll('@', '')
-                            .replaceAll('#', '')
-                        $('input[name="slug"]').val(slug)
-                    })
+            $('input[name="title"]').keyup(function() {
+                const slug = $(this).val().toLowerCase().replaceAll(' ', '-').replaceAll('@', '')
+                    .replaceAll('#', '')
+                $('input[name="slug"]').val(slug)
+            })
 
-                    $('#productimg').change(function() {
-                        const file = $(this)[0].files[0]
-                        const url = URL.createObjectURL(file)
-                        $('#preview').attr('src', url)
-                    })
+            $('#productimg').change(function() {
+                const file = $(this)[0].files[0]
+                const url = URL.createObjectURL(file)
+                $('#preview').attr('src', url)
+            })
 
-                    $('#gallImges').on('change', function(e) {
-                        const previewContainer = $('.gallleryImg');                       
+            $('#gallImges').on('change', function(e) {
+                const previewContainer = $('.gallleryImg');
 
-                        Array.from(e.target.files).forEach(file => {
-                            if (file.type.startsWith('image/')) {                                
-                                const url = URL.createObjectURL(file);
-                                const imgBox = `
-                                    <div class="col-4 mb-3">
-                                        <img height="100px" src="${url}" class="img-fluid rounded shadow">
+                Array.from(e.target.files).forEach(file => {
+                    if (file.type.startsWith('image/')) {
+                        const url = URL.createObjectURL(file);
+                        const imgBox = `
+                                    <div class="col-4 my-3 position-relative">
+                                        <img style="background-size: 100% 100%;"" src="${url}" class="img-fluid rounded shadow img-thumbnail">
+                                        <button class="position-absolute top-0 end-0 translate-middle badge rounded-pill bg-light text-dark">x</button>
                                     </div>
                                 `;
-                                previewContainer.append(imgBox);
-                            }
-                        });
-                    });
-                })
+                        previewContainer.append(imgBox);
+                    }
+                });
+            });
+            $('.gallleryImg').on('click', '.badge', function() {
+                $(this).parent().remove();
+            })
+        })
     </script>
 @endpush
