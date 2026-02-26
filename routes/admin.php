@@ -25,8 +25,8 @@ Route::prefix('/category')
     });
 
 // add product routes
-Route::prefix('/product') // Added /admin to match your intent
-    ->name('product.')     // Changed to admin.product.
+Route::prefix('/product')
+    ->name('product.')     
     ->controller(ProductController::class)
     ->group(function(){
         Route::get('/add-product/{id?}', 'addProduct')->name('add');

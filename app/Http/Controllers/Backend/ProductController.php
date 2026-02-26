@@ -89,7 +89,7 @@ class ProductController extends Controller
     public function updateProduct(ProductRequest $request, $id)
     {
         $product = product::findOrFail($id);
-        $product = Product::findOrFail($id);
+        
         
         // Update Main Image (Only if new image is uploaded)
         $productImg = $product->image; 
