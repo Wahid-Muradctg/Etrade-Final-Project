@@ -94,16 +94,9 @@
                                 <li class="menu-item-has-children">
                                     <a href="index-1.html#">Shop</a>
                                     <ul class="axil-submenu">
-                                        <li><a href="shop-sidebar.html">Shop With Sidebar</a></li>
-                                        <li><a href="shop.html">Shop no Sidebar</a></li>
-                                        <li><a href="single-product.html">Product Variation 1</a></li>
-                                        <li><a href="single-product-2.html">Product Variation 2</a></li>
-                                        <li><a href="single-product-3.html">Product Variation 3</a></li>
-                                        <li><a href="single-product-4.html">Product Variation 4</a></li>
-                                        <li><a href="single-product-5.html">Product Variation 5</a></li>
-                                        <li><a href="single-product-6.html">Product Variation 6</a></li>
-                                        <li><a href="single-product-7.html">Product Variation 7</a></li>
-                                        <li><a href="single-product-8.html">Product Variation 8</a></li>
+                                        @foreach ($categories as $category)
+                                        <li><a href="{{ $category->slug }}">{{ $category->title }}</a></li>
+                                        @endforeach
                                     </ul>
                                 </li>
                                 <li class="menu-item-has-children">

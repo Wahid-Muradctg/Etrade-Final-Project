@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -14,11 +15,13 @@ class ProductController extends Controller
     {
         $categories = Category::where('status', true)->select('id', 'title')->latest()->get();
         $products = Product::latest()->get();
+        
         return view('backend.product.add-product', compact('categories', 'products'));
     }
 
     public function storeProduct(ProductRequest $request)
     {
+        
         // 1. Handle Main Image
         $productImg = $request->hasFile('image') ? $request->file('image')->store('product', 'public') : null;
 
@@ -29,20 +32,20 @@ class ProductController extends Controller
                 $galleryPaths[] = $file->store('galleryimg', 'public');
             }
         }
-
+        
         // 3. Database Store
-        Product::create([
+       $product =  Product::create([
             'title'             => $request->title,
+            'category_id'       => $request->category_id,
             'slug'              => str($request->title)->slug(),
             'short_description' => $request->short_description,
             'description'       => $request->description,
-            'category_id'       => $request->category_id,
             'brand_name'        => $request->brand_name,
             'model'             => $request->model,
             'sku'               => $request->sku,
             'stock'             => $request->stock,
             'minstock'          => $request->minstock,
-            'stock_status'      => $request->stock_status,
+            'stock_status'      => $request->stock_status ?? true,
             'price'             => $request->price,
             'sale_price'        => $request->sale_price,
             'image'             => $productImg,
@@ -50,13 +53,15 @@ class ProductController extends Controller
             'published_status'  => $request->published_status,
             'published_date'    => $request->published_date,
         ]);
-
+        
+        
         return back()->with('msg', ['type' => 'success', 'content' => 'New Product Added!']);
     }
 
     public function productList()
     {
         $products = Product::latest()->get();
+        
         return view('backend.product.product-list', compact('products'));
     }
 
