@@ -3,14 +3,136 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\ProductRequest;
+use App\Models\Category;
+use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-   function addProduct(){
-    return view('backend.product.add-product');
-   }
-   function productList(){
-      return view('backend.product.product-list');
-   }
+    public function addProduct()
+    {
+        $categories = Category::where('status', true)->select('id', 'title')->latest()->get();
+        $products = Product::latest()->get();
+        
+        return view('backend.product.add-product', compact('categories', 'products'));
+    }
+
+    public function storeProduct(ProductRequest $request)
+    {
+        
+        // 1. Handle Main Image
+        $productImg = $request->hasFile('image') ? $request->file('image')->store('product', 'public') : null;
+
+        // 2. Handle Gallery Images
+        $galleryPaths = [];
+        if($request->hasFile('gall_img')) {
+            foreach($request->file('gall_img') as $file) {
+                $galleryPaths[] = $file->store('galleryimg', 'public');
+            }
+        }
+        
+        // 3. Database Store
+       $product =  Product::create([
+            'title'             => $request->title,
+            'category_id'       => $request->category_id,
+            'slug'              => str($request->title)->slug(),
+            'short_description' => $request->short_description,
+            'description'       => $request->description,
+            'brand_name'        => $request->brand_name,
+            'model'             => $request->model,
+            'sku'               => $request->sku,
+            'stock'             => $request->stock,
+            'minstock'          => $request->minstock,
+            'stock_status'      => $request->stock_status ?? true,
+            'price'             => $request->price,
+            'sale_price'        => $request->sale_price,
+            'image'             => $productImg,
+            'gall_img'          => json_encode($galleryPaths),
+            'published_status'  => $request->published_status,
+            'published_date'    => $request->published_date,
+        ]);
+        
+        
+        return back()->with('msg', ['type' => 'success', 'content' => 'New Product Added!']);
+    }
+
+    public function productList()
+    {
+        $products = Product::latest()->get();
+        
+        return view('backend.product.product-list', compact('products'));
+    }
+
+    public function deleteProduct($id)
+    {
+        $product = Product::findOrFail($id);
+
+        // Delete Main Image
+        if ($product->image && Storage::disk('public')->exists($product->image)) {
+            Storage::disk('public')->delete($product->image);
+        }
+
+        // Delete Gallery Images
+        if ($product->gall_img) {
+            $images = json_decode($product->gall_img, true);
+            if (is_array($images)) {
+                foreach ($images as $img) {
+                    if (Storage::disk('public')->exists($img)) {
+                        Storage::disk('public')->delete($img);
+                    }
+                }
+            }
+        }
+
+        $product->delete();
+
+        return redirect()->route('admin.product.list')->with('msg', ['type' => 'warning', 'content' => 'Product Deleted!']);
+    }
+
+    public function updateProduct(ProductRequest $request, $id)
+    {
+        $product = product::findOrFail($id);
+        
+        
+        // Update Main Image (Only if new image is uploaded)
+        $productImg = $product->image; 
+        if ($request->hasFile('image')) {
+            if ($product->image) Storage::disk('public')->delete($product->image);
+            $productImg = $request->file('image')->store('product', 'public');
+        }
+
+        // Update Gallery Images
+        $galleryPaths = json_decode($product->gall_img, true) ?? [];
+        if ($request->hasFile('gall_img')) {
+            // Optional: delete old gallery images here if you want to replace them
+            foreach ($request->file('gall_img') as $file) {
+                $galleryPaths[] = $file->store('galleryimg', 'public');
+            }
+        }
+
+        // Use update() instead of create()
+        $product->update([
+            'title'             => $request->title,
+            'category_id'       => $request->category_id,
+            'slug'              => str($request->title)->slug(),
+            'short_description' => $request->short_description,
+            'description'       => $request->description,
+           
+            'brand_name'        => $request->brand_name,
+            'model'             => $request->model,
+            'sku'               => $request->sku,
+            'stock'             => $request->stock,
+            'minstock'          => $request->minstock,
+            'stock_status'      => $request->stock_status,
+            'price'             => $request->price,
+            'sale_price'        => $request->sale_price,
+            'image'             => $productImg,
+            'gall_img'          => json_encode($galleryPaths),
+            'published_status'  => $request->published_status,
+            'published_date'    => $request->published_date,
+        ]);
+
+        return back()->with('msg', ['type' => 'success', 'content' => 'Product Updated!']);
+    }
 }

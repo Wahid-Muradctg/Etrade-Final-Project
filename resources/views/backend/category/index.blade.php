@@ -14,39 +14,47 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Category</td>
+                                @foreach ($categories as $key=>$category)
+                                    <tr>
+                                    <td>{{ ++$key }}</td>
                                     <td>
-                                        <a href="#">Edit</a>
-                                        <a href="#">Delete</a>
+                                        <img width="80px" src="{{ getImage($category->icon) }}" alt="{{ $category->title }}">
+                                        {{ $category->title }}</td>
+                                    <td>
+                                        <a href="{{ route('admin.category.show', $category->id) }}">Edit</a>
+                                        <a href="{{ route('admin.category.delete',$category->id) }}">Delete</a>
                                     </td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="card">
-                        <div class="card-header">Add Category</div>
+                        <div class="card-header">{{ request()->id ? "Edit" : 'Add' }} Category</div>
                         <div class="card-body">
-                            <form enctype="multipart/form-data" action="{{ route('admin.category.store') }}" method="POST">
+                            
+                            <form enctype="multipart/form-data" action="{{ request()->id ? route('admin.category.update', request()->id) : route('admin.category.store') }}" method="POST">
                                 @csrf
                                 <div class="form-group my-2">
                                     <label class="d-block">Category Title <span class="text-danger">*</span></label>
-                                    <input type="text" placeholder="eg: Electronics, Fashion..." class="form-control" name="title">
+                                    <input value="{{ $categories->where('id', request()->id)->first()->title ?? '' }}" type="text" placeholder="eg: Electronics, Fashion..." class="form-control" name="title">
                                     @error('title')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group my-2">
+                                    @if (request()->id && $categories->where('id', request()->id)->first()->icon)
+                                        <img width="80px" src="{{ getImage($categories->where('id', request()->id)->first()->icon) }}" alt="">
+                                    @endif
                                     <label class="d-block">Category Icon</label>
                                     <input type="file" class="form-control" name="icon">
                                     @error('icon')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <button class="btn btn-primary" type="submit">Submit</button>
+                                <button class="btn btn-primary" type="submit">{{ request()->id ? "Update" : 'Submit' }}</button>
                             </form>
                         </div>
                     </div>

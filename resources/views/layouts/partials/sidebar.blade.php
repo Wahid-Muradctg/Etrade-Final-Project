@@ -16,13 +16,13 @@
             </li>
 
             <!-- products -->
-            <li class="menu-item {{ isActiveRoute('admin.product.*') }}  ">
+            <li class="menu-item {{ isActiveRoute('admin.product.*', 'active open') }}  ">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-package"></i>
                 <div data-i18n="Layouts">Product</div>
               </a>
 
-              <ul class="menu-sub">
+              <ul class="menu-sub ">
                 <li class="menu-item {{ isActiveRoute('admin.product.add') }} ">
                   <a href="{{ route('admin.product.add') }}" class="menu-link">
                     <div data-i18n="Without menu">Add Product</div>

@@ -17,22 +17,23 @@ Route::prefix('/category')
     ->name('category.')
     ->controller(CategoryController::class)
     ->group(function(){
-        Route::get('/', 'showCategory')->name('show');
+        Route::get('/{id?}', 'showCategory')->name('show');
         Route::post('/store', 'storeCategory')->name('store');
+        Route::get('/delete/{id}', 'deleteCategory')->name('delete');
+        Route::post('/update/{id}', 'updateCategory')->name('update');
+
     });
+
+// add product routes
 Route::prefix('/product')
-    ->name('product.')
+    ->name('product.')     
     ->controller(ProductController::class)
     ->group(function(){
-        Route::get('/', 'addProduct')->name('add');
-        
-    });
-Route::prefix('/product')
-    ->name('product.')
-    ->controller(ProductController::class)
-    ->group(function(){
-        Route::get('/product', 'productList')->name('list');
-        
+        Route::get('/add-product/{id?}', 'addProduct')->name('add');
+        Route::post('/store-product','storeProduct')->name('storproduct');
+        Route::get('/product-list', 'productList')->name('list');
+        Route::get('/delete-product/{id}','deleteProduct')->name('deleteproduct');
+        Route::post('/update-product/{id}','updateProduct')->name('updateproduct');
     });
 
 
