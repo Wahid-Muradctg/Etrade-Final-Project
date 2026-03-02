@@ -8,7 +8,7 @@
     background-color: #fff;
     user-select: none;
     min-height: 200px;
-    
+    min-width: 200px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
@@ -148,7 +148,7 @@ rte-codebox {
 
 
 .rte-modern.rte-desktop.rte-toolbar-default {
-    min-width:100%;
+    min-width: 100%;
 }
 
 .rte-modern.rte-desktop.rte-toolbar-full {
