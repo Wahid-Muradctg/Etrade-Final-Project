@@ -264,6 +264,7 @@
             $('.gallleryImg').on('click', '.badge', function() {
                 $(this).parent().remove();
             })
+            var editor1 = new RichTextEditor("#productDescription");
         })
     </script>
 @endpush
