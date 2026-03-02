@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -115,11 +114,11 @@ class ProductController extends Controller
         // Use update() instead of create()
         $product->update([
             'title'             => $request->title,
+            'category_id'       => $request->category_id,
             'slug'              => str($request->title)->slug(),
             'short_description' => $request->short_description,
             'description'       => $request->description,
-            'catagory_id'       => $request->catagory_id,
-            'category_id'       => $request->category_id,
+           
             'brand_name'        => $request->brand_name,
             'model'             => $request->model,
             'sku'               => $request->sku,

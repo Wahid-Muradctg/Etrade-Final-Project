@@ -3,7 +3,7 @@
 <div class="card border border-light border-2 rounded-3 mb-4">
     <h4 class="card-header">Product List</h4>
     <div class="table-responsive text-nowrap">
-        <table class="table table-responsive table-striped pb-5">
+        <table class="table table-responsive table-striped pb-5 w-100">
             <thead class="table-light">
                 <tr>
                     <th>Id</th>
@@ -30,7 +30,7 @@
                     <td>
                         <img width="80px" src="{{ getImage($product->image) }}" alt="{{ $product->title }}">
                     </td>
-                    <td>{{$product->catagory_id}}</td>
+                    <td>{{$product->category_id}}</td>
                     <td>{{ $product->slug }}</td>
                     <td>{{ $product->price }}</td>
                     <td>{{ $product->sale_price }}</td>
