@@ -32,7 +32,7 @@
     <link rel="stylesheet" href="{{ asset('backend/assets/css/demo.css') }}" />
     <link rel="stylesheet" href="{{ asset('backend/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
     <link rel="stylesheet" href="{{ asset('backend/assets/vendor/css/pages/page-auth.css') }}" />
-    <link rel="stylesheet" href="{{ asset('backend/assets/richtexteditor/rte_theme_default.css') }}" />
+    <link rel="stylesheet" href="{{ asset('backend/assets/richtexteditor/rte_theme_default.css') }}">
     <script src="{{ asset('backend/assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('backend/assets/js/config.js') }}"></script>
 
@@ -247,6 +247,8 @@
     <script src="{{ asset('backend/assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
     <script src="{{ asset('backend/assets/js/dashboards-analytics.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('backend/assets/richtexteditor/plugins/all_plugins.js') }}"></script>
+    <script src="{{ asset("backend/assets/richtexteditor/rte.js") }}"></script>
     <script>
         const Toast = Swal.mixin({
             toast: true,
