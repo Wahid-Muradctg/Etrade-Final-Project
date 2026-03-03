@@ -27,7 +27,7 @@ class ProductRequest extends FormRequest
             'short_description' => 'nullable|string',
             'description' => 'nullable|string',
 
-            'catagory_id' => 'required|exists:categories,id',
+            'category_id' => 'required|exists:categories,id',
 
             'brand_name' => 'nullable|string|max:255',
             'model' => 'nullable|string|max:255|unique:products,model,' ,
@@ -41,7 +41,7 @@ class ProductRequest extends FormRequest
             'sale_price' => 'nullable|integer|min:0',
 
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp',
-            'gall_img' => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'gall_Img' => 'nullable|image|mimes:jpg,jpeg,png,webp',
 
             'published_status' => 'nullable|string',
             'published_date' => 'nullable|date',

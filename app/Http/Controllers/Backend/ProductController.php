@@ -19,19 +19,20 @@ class ProductController extends Controller
 
     public function storeProduct(ProductRequest $request)
     {
+        
         // 1. Handle Main Image
         $productImg = $request->hasFile('image') ? $request->file('image')->store('product', 'public') : null;
 
         // 2. Handle Gallery Images
         $galleryPaths = [];
-        if($request->hasFile('gall_img')) {
-            foreach($request->file('gall_img') as $file) {
+        if($request->hasFile('gall_Img')) {
+            foreach($request->file('gall_Img') as $file) {
                 $galleryPaths[] = $file->store('galleryimg', 'public');
             }
         }
 
         // 3. Database Store
-        Product::create([
+       $product= Product::create([
             'title'             => $request->title,
             'slug'              => str($request->title)->slug(),
             'short_description' => $request->short_description,
@@ -100,9 +101,9 @@ class ProductController extends Controller
 
         // Update Gallery Images
         $galleryPaths = json_decode($product->gall_img, true) ?? [];
-        if ($request->hasFile('gall_img')) {
+        if ($request->hasFile('gall_Img')) {
             // Optional: delete old gallery images here if you want to replace them
-            foreach ($request->file('gall_img') as $file) {
+            foreach ($request->file('gall_Img') as $file) {
                 $galleryPaths[] = $file->store('galleryimg', 'public');
             }
         }

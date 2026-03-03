@@ -1,11 +1,11 @@
 @extends('layouts.BackendLayout')
 @section('backend_cnt')
     <div class="heading pb-4">
-        <h2>{{ isset($editProduct) ? 'Edit Product' : 'Add New Product' }}</h2>
-        <p>{{ isset($editProduct) ? 'Edit product and store' : 'Add a new product to your store' }} </p>
+        <h2>{{ request()->id ? "Edit" : 'Add' }} Product</h2>
+        <p>{{ request()->id ? "Edit Product and Store Product" : 'Add a new Product to your Store' }} </p>
     </div>
     <form
-        action="{{ isset($editProduct) ? route('admin.product.updateproduct', $editProduct->id) : route('admin.product.storproduct') }}"
+        action="{{ request()->id ? route('admin.product.updateproduct', request()->id) : route('admin.product.storproduct') }}"
         enctype="multipart/form-data" method="POST">
         @csrf
         <div class="row">
@@ -52,12 +52,12 @@
                     </div>
                 </div>
                 <div class="card border border-light border-2 rounded-3 mb-4">
-                    <h4 class="card-header">Catagory</h4>
+                    <h4 class="card-header">Category</h4>
                     <hr class="p-0 m-0">
                     <div class="card-body">
                         <div class="mb-4">
-                            <label for="catagorySelect" class="form-label">Product Catagory</label>
-                            <select class="form-select" name="catagory_id" id="catagorySelect"
+                            <label for="catagorySelect" class="form-label">Product Category</label>
+                            <select class="form-select" name="category_id" id="catagorySelect"
                                 aria-label="Default select example">
                                 @forelse ($categories as $category)
                                     <option selected disabled>Please select a Cagtegory</option>
@@ -105,9 +105,13 @@
                             </div>
                             <div class="mb-4 col-lg-4 col-12">
                                 <label for="catagoryStatus" class="form-label">Product Status</label>
-                                <select class="form-select" id="catagoryStatus" aria-label="Default select example">
-                                    <option selected>In Stock</option>
-                                    <option>Out Of Stock</option>
+                                <select class="form-select" name="stock_status" id="catagoryStatus">
+                                    <option value="1"
+                                        {{ isset($editProduct) && $editProduct->stock_status == 1 ? 'selected' : '' }}>In
+                                        Stock</option>
+                                    <option value="0"
+                                        {{ isset($editProduct) && $editProduct->stock_status == 0 ? 'selected' : '' }}>
+                                        Out Of Stock</option>
                                 </select>
                             </div>
                         </div>
@@ -123,9 +127,9 @@
                             <div class="col-lg-6 col-12">
                                 <label for="brand" class="form-label">Brand Name</label>
                                 <input value="{{ $products->where('id', request()->id)->first()->brand_name ?? '' }}"
-                                    type="text" class="form-control" id="brand" name="bname"
+                                    type="text" class="form-control" id="brand" name="brand_name"
                                     aria-describedby="defaultFormControlHelp" />
-                                @error('bname')
+                                @error('brand_name')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -149,7 +153,7 @@
                             <div class="col-lg-6 col-12">
                                 <label for="regularPrice" class="form-label">Regular Price</label>
                                 <input value="{{ $products->where('id', request()->id)->first()->price ?? '' }}"
-                                    class="form-control" name="regularprice" type="number" id="Price" />
+                                    class="form-control" name="price" type="number" id="Price" />
                                 @error('price')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -222,7 +226,7 @@
                 <div class="row justify-content-evenly pt-5">
                     {{-- <a href="" class="btn btn-primary col-5 p-2"><i class="bx bx-save me-2"></i>Save product</a> --}}
                     <button type="submit" class="btn btn-dark col-6 p-2">
-                        <i class="bx bx-plus me-2"></i>{{ isset($editProduct) ? 'Edit Product' : 'Add Product' }}
+                        <i class="bx bx-plus me-2"></i>{{ request()->id ? 'Edit Product' : 'Add Product' }}
                     </button>
                 </div>
             </div>

@@ -9,7 +9,7 @@
                         <th>Id</th>
                         <th>P.Name</th>
                         <th>p.image</th>
-                        <th>Catagory</th>
+                        <th>Category</th>
                         <th>Slug</th>
                         <th>Regular Price</th>
                         <th>Sale Price</th>
@@ -30,7 +30,7 @@
                             <td>
                                 <img width="80px" src="{{ getImage($product->image) }}" alt="{{ $product->title }}">
                             </td>
-                            <td>{{$product->catagory_id}}</td>
+                            <td>{{$product->category_id}}</td>
                             <td>{{ $product->slug }}</td>
                             <td>{{ $product->price }}</td>
                             <td>{{ $product->sale_price }}</td>
@@ -41,15 +41,16 @@
                             <td>{{ $product->published_status }}</td>
                             <td>
                                 <div class="dropdown">
-                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                        data-bs-toggle="dropdown">
-                                        <i class="icon-base bx bx-dots-vertical-rounded"></i>
+                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                        <i class="bx bx-dots-vertical-rounded"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{ route('admin.product.updateproduct') }}"><i
-                                                class="icon-base bx bx-edit-alt me-1"></i> Edit</a>
-                                        <a class="dropdown-item" href="{{ route('admin.product.deleteproduct',$product->id) }}"><i
-                                                class="icon-base bx bx-trash me-1"></i> Delete</a>
+                                        <a class="dropdown-item" href="{{ route('admin.product.add', $product->id) }}">
+                                            <i class="bx bx-edit-alt me-1"></i> Edit
+                                        </a>
+                                        <a class="dropdown-item text-danger" href="{{ route('admin.product.deleteproduct', $product->id) }}" onclick="return confirm('Are you sure?')">
+                                            <i class="bx bx-trash me-1"></i> Delete
+                                        </a>
                                     </div>
                                 </div>
                             </td>
