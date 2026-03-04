@@ -1,11 +1,11 @@
 @extends('layouts.BackendLayout')
 @section('backend_cnt')
     <div class="heading pb-4">
-        <h2>{{ isset($editProduct) ? 'Edit Product' : 'Add New Product' }}</h2>
-        <p>{{ isset($editProduct) ? 'Edit product and store' : 'Add a new product to your store' }} </p>
+        <h2>{{ request()->id ? "Edit" : 'Add' }} Product</h2>
+        <p>{{ request()->id ? "Edit Product and Store Product" : 'Add a new Product to your Store' }} </p>
     </div>
     <form
-        action="{{ isset($editProduct) ? route('admin.product.updateproduct', $editProduct->id) : route('admin.product.storproduct') }}"
+        action="{{ request()->id ? route('admin.product.updateproduct', request()->id) : route('admin.product.storproduct') }}"
         enctype="multipart/form-data" method="POST">
         @csrf
         <div class="row">
@@ -42,12 +42,9 @@
                             @enderror
                         </div>
                         <div>
-                            <label for="description" class="form-label">Product Description</label>
-
-                            <textarea class="form-control" id="description" name="description">
-{{ old('description', $editProduct->description ?? '') }}
-</textarea>
-
+                            <label for="productDescription" class="form-label">Product Description</label>
+                            <textarea value="{{ $products->where('id', request()->id)->first()->description ?? '' }}" class="form-control"
+                                id="productDescription" rows="5" name="description"></textarea>
                             @error('description')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -55,11 +52,11 @@
                     </div>
                 </div>
                 <div class="card border border-light border-2 rounded-3 mb-4">
-                    <h4 class="card-header">Catagory</h4>
+                    <h4 class="card-header">Category</h4>
                     <hr class="p-0 m-0">
                     <div class="card-body">
                         <div class="mb-4">
-                            <label for="catagorySelect" class="form-label">Product Catagory</label>
+                            <label for="catagorySelect" class="form-label">Product Category</label>
                             <select class="form-select" name="category_id" id="catagorySelect"
                                 aria-label="Default select example">
                                 @forelse ($categories as $category)
@@ -69,10 +66,6 @@
                                     <option selected disabled>Please add Cagtegory</option>
                                 @endforelse
                             </select>
-
-                            @error('category_id')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
 
                         </div>
 
@@ -112,10 +105,13 @@
                             </div>
                             <div class="mb-4 col-lg-4 col-12">
                                 <label for="catagoryStatus" class="form-label">Product Status</label>
-                                <select class="form-select" name="stock_status" id="catagoryStatus"
-                                    aria-label="Default select example">
-                                    <option value="1" selected>In Stock</option>
-                                    <option value="0">Out Of Stock</option>
+                                <select class="form-select" name="stock_status" id="catagoryStatus">
+                                    <option value="1"
+                                        {{ isset($editProduct) && $editProduct->stock_status == 1 ? 'selected' : '' }}>In
+                                        Stock</option>
+                                    <option value="0"
+                                        {{ isset($editProduct) && $editProduct->stock_status == 0 ? 'selected' : '' }}>
+                                        Out Of Stock</option>
                                 </select>
                             </div>
                         </div>
@@ -230,7 +226,7 @@
                 <div class="row justify-content-evenly pt-5">
                     {{-- <a href="" class="btn btn-primary col-5 p-2"><i class="bx bx-save me-2"></i>Save product</a> --}}
                     <button type="submit" class="btn btn-dark col-6 p-2">
-                        <i class="bx bx-plus me-2"></i>{{ isset($editProduct) ? 'Edit Product' : 'Add Product' }}
+                        <i class="bx bx-plus me-2"></i>{{ request()->id ? 'Edit Product' : 'Add Product' }}
                     </button>
                 </div>
             </div>

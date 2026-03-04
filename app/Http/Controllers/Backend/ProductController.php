@@ -14,7 +14,6 @@ class ProductController extends Controller
     {
         $categories = Category::where('status', true)->select('id', 'title')->latest()->get();
         $products = Product::latest()->get();
-        
         return view('backend.product.add-product', compact('categories', 'products'));
     }
 
@@ -26,25 +25,25 @@ class ProductController extends Controller
 
         // 2. Handle Gallery Images
         $galleryPaths = [];
-        if($request->hasFile('gall_img')) {
-            foreach($request->file('gall_img') as $file) {
+        if($request->hasFile('gall_Img')) {
+            foreach($request->file('gall_Img') as $file) {
                 $galleryPaths[] = $file->store('galleryimg', 'public');
             }
         }
-        
+
         // 3. Database Store
-       $product =  Product::create([
+       $product= Product::create([
             'title'             => $request->title,
-            'category_id'       => $request->category_id,
             'slug'              => str($request->title)->slug(),
             'short_description' => $request->short_description,
             'description'       => $request->description,
+            'category_id'       => $request->category_id,
             'brand_name'        => $request->brand_name,
             'model'             => $request->model,
             'sku'               => $request->sku,
             'stock'             => $request->stock,
             'minstock'          => $request->minstock,
-            'stock_status'      => $request->stock_status ?? true,
+            'stock_status'      => $request->stock_status,
             'price'             => $request->price,
             'sale_price'        => $request->sale_price,
             'image'             => $productImg,
@@ -52,15 +51,13 @@ class ProductController extends Controller
             'published_status'  => $request->published_status,
             'published_date'    => $request->published_date,
         ]);
-        
-        
+
         return back()->with('msg', ['type' => 'success', 'content' => 'New Product Added!']);
     }
 
     public function productList()
     {
         $products = Product::latest()->get();
-        
         return view('backend.product.product-list', compact('products'));
     }
 
@@ -93,7 +90,7 @@ class ProductController extends Controller
     public function updateProduct(ProductRequest $request, $id)
     {
         $product = product::findOrFail($id);
-        
+        $product = Product::findOrFail($id);
         
         // Update Main Image (Only if new image is uploaded)
         $productImg = $product->image; 
@@ -104,9 +101,9 @@ class ProductController extends Controller
 
         // Update Gallery Images
         $galleryPaths = json_decode($product->gall_img, true) ?? [];
-        if ($request->hasFile('gall_img')) {
+        if ($request->hasFile('gall_Img')) {
             // Optional: delete old gallery images here if you want to replace them
-            foreach ($request->file('gall_img') as $file) {
+            foreach ($request->file('gall_Img') as $file) {
                 $galleryPaths[] = $file->store('galleryimg', 'public');
             }
         }
@@ -114,11 +111,11 @@ class ProductController extends Controller
         // Use update() instead of create()
         $product->update([
             'title'             => $request->title,
-            'category_id'       => $request->category_id,
             'slug'              => str($request->title)->slug(),
             'short_description' => $request->short_description,
             'description'       => $request->description,
-           
+            'catagory_id'       => $request->catagory_id,
+            'category_id'       => $request->category_id,
             'brand_name'        => $request->brand_name,
             'model'             => $request->model,
             'sku'               => $request->sku,
